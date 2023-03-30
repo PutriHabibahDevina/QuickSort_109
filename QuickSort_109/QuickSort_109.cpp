@@ -38,3 +38,59 @@ void swap(int x, int y)
 	arr[x] = arr[y];
 	arr[y] = temp;
 }
+
+void q_short(int low, int high)
+{
+	int pivot, i, j;
+	if (low > high)		//langkah algoritma no.1
+		return;
+
+	//partition the list into two parts:
+	//one containing elements less that or equal to pivot
+	//outher containing elements greather than pivot
+
+	pivot = arr[low];	//langkah algoritma no.2
+
+	i = low + 1;		//langkah algoritma no.3
+	j = high;			//langkah algoritma no.4
+
+	while (i <= j)		//langkah algoritma no.10
+	{
+		//search for an element less than or equal to pivot
+		while ((arr[i] <= pivot) && (i <= high))			//langkah algoritma no.5
+		{
+			i++;											//langkah algoritma no.6
+			cmp_count++;
+		}
+		cmp_count++;
+
+		//search for an element less than or equal to pivot
+		while ((arr[j] > pivot) && (j >= low))				//langkah algoritma no.7
+		{
+			j--;											//langkah algoritma no.8
+			cmp_count++;
+		}
+		cmp_count++;
+
+		//if the greater element is on the left of the element
+		if (i < j)											//langkah algoritma no.9
+		{
+			//swap the element at index i with the element at index j
+			swap(i, j);
+			mov_count++;
+		}
+	}
+	//j now containt the index of the last element in the sorted list
+	if (low < j)											//langkah algoritma no.11
+	{
+		//move the pivot to its correct position in the list
+		swap(low, j);
+		mov_count++;
+	}
+	//sort the list on the left pivot using quick sort
+	q_short(low, j + 1);									//langkah algoritma no.12
+
+	//sort the list on the right of the pivot using quick sort
+	q_short(j + 1, high);									//langkah algoritma no.13
+
+}
